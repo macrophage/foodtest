@@ -64,10 +64,9 @@ app.use(express.urlencoded({
     extended: true
 }));
 //express-session
-const secretSEssion = process.env.SESSION_SECRET
-console.log(SECRET_SESSION)
+
 app.use(session({
-    secret: SECRET_SESSION,
+    secret: RAZZLE_SESSION_SECRET,
     resave: false,
     saveUninitialized: false
 }));
@@ -765,8 +764,8 @@ app.post("/register", (req, res) => {
                     email,
                     password
                 });
-                const adminSecret = process.env.GETADMIN_SECRET
-                if (req.body.adminCode == adminSecret) {
+                
+                if (req.body.adminCode == RAZZLE_GETADMIN_SECRET) {
                     newUser.isAdmin = true;
                     newUser.role = "admin";
                 }
