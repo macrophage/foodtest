@@ -1,7 +1,7 @@
 if(process.env.NODE_ENV !== "production"){
     require('dotenv').config()
 }
-
+const test;
 const express = require("express");
 const app = express();
 app.use(express.static("public"));
@@ -66,7 +66,7 @@ app.use(express.urlencoded({
 //express-session
 
 app.use(session({
-    secret: process.env.RAZZLE_SESSION_SECRET,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false
 }));
@@ -765,7 +765,7 @@ app.post("/register", (req, res) => {
                     password
                 });
                 
-                if (req.body.adminCode == process.env.RAZZLE_GETADMIN_SECRET) {
+                if (req.body.adminCode == process.env.GETADMIN) {
                     newUser.isAdmin = true;
                     newUser.role = "admin";
                 }
