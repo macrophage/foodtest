@@ -89,7 +89,7 @@ mongoose.connect("mongodb+srv://Macrofag:qweqwe1441@fooddb.jcgz7.mongodb.net/foo
     useNewUrlParser: true
 });
 
-const port = process.env.port;
+let port = process.env.port;
 
 //! ********************************************************************************************* !\\
 //login and logout handler
