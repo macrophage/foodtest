@@ -888,9 +888,7 @@ app.post("/main/advanced-dish/favorite", (req, res) => {
     })
     
 })
-if(port == null || port == "") {
-    port = 3000
-}
-app.listen(port, () => {
+
+app.listen(process.env.PORT || 5000), () => {
     console.log("Live");
-})
+}
