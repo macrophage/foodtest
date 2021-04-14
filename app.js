@@ -1,7 +1,7 @@
 if(process.env.NODE_ENV !== "production"){
     require('dotenv').config()
 }
-const test;
+
 const express = require("express");
 const app = express();
 app.use(express.static("public"));
