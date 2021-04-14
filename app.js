@@ -1,6 +1,7 @@
 if(process.env.NODE_ENV !== "production"){
     require('dotenv').config()
 }
+
 const express = require("express");
 const app = express();
 app.use(express.static("public"));
@@ -63,9 +64,10 @@ app.use(express.urlencoded({
     extended: true
 }));
 //express-session
+const secretSEssion = process.env.SESSION_SECRET
 
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: secretSEssion,
     resave: false,
     saveUninitialized: false
 }));
@@ -763,7 +765,8 @@ app.post("/register", (req, res) => {
                     email,
                     password
                 });
-                if (req.body.adminCode == "admin") {
+                const adminSecret = process.env.GETADMIN_SECRET
+                if (req.body.adminCode == adminSecret) {
                     newUser.isAdmin = true;
                     newUser.role = "admin";
                 }
