@@ -89,7 +89,7 @@ mongoose.connect("mongodb+srv://Macrofag:qweqwe1441@fooddb.jcgz7.mongodb.net/foo
     useNewUrlParser: true
 });
 
-const port = process.env.port || 3000;
+const port = process.env.port;
 
 //! ********************************************************************************************* !\\
 //login and logout handler
@@ -888,6 +888,9 @@ app.post("/main/advanced-dish/favorite", (req, res) => {
     })
     
 })
+if(port == null || port == "") {
+    port = 3000
+}
 app.listen(port, () => {
     console.log("Live");
 })
