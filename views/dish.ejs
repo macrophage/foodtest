@@ -1,0 +1,66 @@
+<%- include('header.ejs'); -%>
+<link rel="stylesheet" href="/css/foodStyle.css" />
+<link rel="stylesheet" href="/css/dish.css" />
+<div class="wrapperAll">
+  <div class="wrapperNutritional">
+    <div>
+            <img
+              class="img-dish"
+              src="/images/uploads/<%= name.replace(/\s+/g, '') %>.jpg"
+              onerror="if (this.src != '/images/uploads/default.jpg') this.src = '/images/uploads/default.jpg';"
+            />
+    </div>
+    <% for(let i = 0; i < dish.length; ++i){ %> <% if(dish[i].name === name){ %>
+      <h2><%= dish[i].name %></h2>
+      
+      <p class="fas fa-clock"> Время приготовления <%= dish[i].time %> минут(ы)</p>
+      <p> Белки - <%= dish[i].nutritionalValue.proteins %>. Жиры - <%=
+        dish[i].nutritionalValue.fats %>. Углеводы - <%=
+        dish[i].nutritionalValue.carbohydrates %>. Калории - <%=
+        dish[i].nutritionalValue.calories %>.
+  </p>
+    <% }} %>
+  </div>  
+<div class="wrapper">
+  <h3>Ингредиенты: </h3>
+  <ul class="ingredients">
+  <% for(let i = 0; i < dish.length; ++i){ %> <% if(dish[i].name === name){ %>
+  <% for(let k = 0; k < dish[i].ingredients.name.length; ++k){ %>
+  <li><%= dish[i].ingredients.name[k] %> <%= dish[i].ingredients.amount[k] %>г.</li>
+
+  <% } %>
+</ul>
+<div class="recipe">
+  <h3>Рецепт: </h3>
+  <p><%= dish[i].recipe %></p>
+  </div>
+  <% } %> <% } %>
+
+</div>
+</div>
+  
+<% if(currentUser) { %>
+<div class="form__favorite wrapperAll">
+  <form action="/main/dish/favorite" method="post">
+     <button id="favButton" type="submit" name="name" value="<%=name%>">
+      <% let fav = false %>
+      <% let favoriteDish = currentUser.favoriteDish %>  
+      <% for (let i = 0; i<favoriteDish.length; ++i) { %>
+        <% if(favoriteDish[i].name === name){ %>
+            <% fav = true %>
+            <% break %>  
+        <% }else{ %>
+            <% fav = false %> 
+       <% } %> 
+        <% } %>
+        <% if(fav){ %>
+              Убрать из избранного
+        <% }else{ %>
+              Добавить в избранное
+       <% } %> 
+      </button>
+  </form>
+</div>
+<% } %> 
+
+<%- include('footer.ejs'); -%>

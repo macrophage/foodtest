@@ -1,0 +1,60 @@
+<%- include('header.ejs'); -%>
+<link rel="stylesheet" href="/css/foodStyle.css">
+<link rel="stylesheet" href="/css/advancedDish.css">
+<div class="wrapperAll">
+    <div class="wrapperNutritional">
+      <div>
+        <img
+          class="img-dish"
+          src="/images/uploads/<%= name.replace(/\s+/g, '') %>.jpg"
+          onerror="if (this.src != '/images/uploads/default.jpg') this.src = '/images/uploads/default.jpg';"
+        />
+</div>
+      <% for(let i = 0; i < advancedDish.length; ++i){ %> <% if(advancedDish[i].name === name){ %>
+        <h2><%= advancedDish[i].name %></h2>
+        <p>Время приготовления <%= advancedDish[i].time %> минут(ы)</p>
+        <p> Белки - <%= advancedDish[i].nutritionalValue.proteins %>. Жиры - <%=
+          advancedDish[i].nutritionalValue.fats %>. Углеводы - <%=
+          advancedDish[i].nutritionalValue.carbohydrates %>. Калории - <%=
+          advancedDish[i].nutritionalValue.calories %>.
+    </p>
+      <% }} %>
+    </div>  
+  <div class="wrapper">
+    <h3>Ингредиенты: </h3>
+    <ul class="ingredients"></ul>
+    <% for(let i = 0; i < advancedDish.length; ++i){ %> <% if(advancedDish[i].name === name){ %>
+    <% for(let k = 0; k < advancedDish[i].ingredients.name.length; ++k){ %>
+   <li><%= advancedDish[i].ingredients.name[k] %> <%= advancedDish[i].ingredients.amount[k] %>г.</li></ul>
+  
+    <% } %>
+    <h3>Рецепт: </h3>
+    <p><%= advancedDish[i].recipe %></p>
+    <% } %> <% } %>
+  </div>
+  </div>
+
+  <% if(currentUser) { %>
+    <div class="form__favorite wrapperAll">
+      <form action="/main/advanced-dish/favorite" method="post">
+         <button id="favButton" type="submit" name="name" value="<%=name%>">
+          <% let fav = false %>
+          <% let favoriteAdvancedDish = currentUser.favoriteAdvancedDish %>  
+          <% for (let i = 0; i<favoriteAdvancedDish.length; ++i) { %>
+            <% if(favoriteAdvancedDish[i].name === name){ %>
+                <% fav = true %>
+                <% break %>  
+            <% }else{ %>
+                <% fav = false %> 
+           <% } %> 
+            <% } %>
+            <% if(fav){ %>
+                  Убрать из избранного
+            <% }else{ %>
+                  Добавить в избранное
+           <% } %> 
+          </button>
+      </form>
+    </div>
+    <% } %> 
+<%- include('footer.ejs'); -%>

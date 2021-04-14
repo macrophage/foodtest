@@ -1,0 +1,80 @@
+<%- include('header.ejs'); -%>
+  
+<link rel="stylesheet" href="/css/adminAssemble.css">
+<div class = "wrapper">
+  <form autocomplete="off" action="/" method="post">
+     <div class="dishName">
+        <label>name</label>
+        <input type="text" name="name" required / autocomplete = "off">
+     </div> 
+     <div class="filter">
+        <table>
+           <tbody>
+              <tr>
+                 <td>Meat</td>
+                 <td><input type="checkbox" name="meat" class = "checkboxFilter"></td>
+              </tr>
+              <tr>
+                 <td>Fish</td>
+                 <td><input type="checkbox" name="fish" class = "checkboxFilter"></td>
+              </tr>
+              <tr>
+                 <td>Vegetables</td>
+                 <td><input type="checkbox" name="vegetables" class = "checkboxFilter"></td>
+              </tr>
+           </tbody>
+        </table>
+     </div>
+     <div class="dishRecipe">
+        <label>recipe</label>
+        <textarea name="recipe"30" rows="10" required></textarea>
+     </div>
+     <input type="button" id="addIngredient" value = "Add" class = "addIngredient">
+     <div id="container" class="autocomplete">   
+        <input class = "ingredient"type="text" required / placeholder="Enter Ingredient" autocomplete="off"name = ingredient>
+        <input class="ingredientQuantity" type="number" min="0" placeholder="Enter Quantity" autocomplete="off" required name = ingredientQuantity>
+     </div>
+     <div class="dishDescription">
+        <label>description</label>
+        <input type="text" name="description" / autocomplete="off">
+     </div>
+     <div class="cookTime">
+        <label>time to cook</label>
+        <input type="number" min="0" name="time" required / autocomplete = "off">
+     </div>
+     
+     <div class = "nutritionalValue "> 
+        <label>Proteins</label>
+        <input type="number" min="0" name="proteins" required / autocomplete = "off">
+        <label>Fats</label>
+        <input type="number" min="0" name="fats" required / autocomplete = "off"> 
+        <label>Carbohydrates</label>
+        <input type="number" min="0" name="carbohydrates" required / autocomplete = "off">
+        <label>Calories</label>
+        <input type="number" min="0" name="calories" required / autocomplete = "off">
+     </div>
+     <label>Is Sauce</label>
+     <input type="checkbox" id = "isSauce" name="isItSauce" value="true">
+     <input type="hidden" id = "isSauceHidden" name="isItSauce" value="false">
+
+     <select name="selectSauce" id = "sauceSelector">
+       <option>Choose Sauce</option>
+      <% sauceName.forEach(sauce => { %>
+            <option> <%= sauce.name %></option>
+      <% }); %>
+     </select>
+     
+     <div>
+       <ul id = "chosenSauce">
+         
+       </ul>
+     </div>
+     <button type="submit" id ="submit">Add New Dish</button>
+  </form>
+</div>
+<script>
+let arrIngredients = '<%- JSON.stringify(allIngredients) %>'
+
+</script>
+<script src="javascript/Admin.js"></script>
+<%- include('footer.ejs'); -%>
