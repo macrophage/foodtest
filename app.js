@@ -65,7 +65,7 @@ app.use(express.urlencoded({
 }));
 //express-session
 const secretSEssion = process.env.SESSION_SECRET
-
+console.log(SECRET_SESSION)
 app.use(session({
     secret: SECRET_SESSION,
     resave: false,
