@@ -64,7 +64,7 @@ app.use(express.urlencoded({
 }));
 //express-session
 app.use(session({
-    secret: "secret",
+    secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: false
 }));
