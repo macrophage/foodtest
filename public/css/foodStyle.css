@@ -12,3 +12,23 @@ body{
 .form__favorite{
     padding: 5% 20% 0;
 }
+.img-dish{
+    position:relative;
+    float:right;
+    max-width: 50%;
+    left: 25%;
+}
+.ingredients li{
+    list-style: disc;
+    
+}
+.ingredients{
+    padding: 25px 0 25px 19px;
+  
+}
+
+@media only screen and (max-width: 1200px){
+.img-dish{
+    display: none;
+}
+}
