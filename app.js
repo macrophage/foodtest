@@ -704,8 +704,9 @@ app.post("/addImage", (req, res) => {
         }
     })
 });
-})
     upload.array('upl',1)
+})
+   
 app.post("/register", (req, res) => {
 
     const {
