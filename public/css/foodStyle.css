@@ -19,15 +19,18 @@ body{
     max-width: 50%;
     left: 25%;
 }
-.wrapper li{
-    
-    padding-bottom: 7px;
+.ingredients {
+    list-style-type: none;
+    padding: 5px 0;
 }
-.ingredients{
-  margin-bottom: 10px;  
-  
+.ingredients li {
+    margin-bottom: 7px;
 }
-.recipe{
+.ingredients li:last-child {
+    margin-bottom: -12px;
+}
+
+  .recipe{
     padding-top: 20px;
 }
 @media only screen and (max-width: 1200px){
