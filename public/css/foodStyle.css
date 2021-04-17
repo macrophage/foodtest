@@ -18,15 +18,17 @@ body{
     max-width: 50%;
     left: 25%;
 }
-.ingredients li{
-    list-style: disc;
+.wrapper li{
     
+    padding-bottom: 7px;
 }
 .ingredients{
-    padding: 25px 0 25px 19px;
+  margin-bottom: 10px;  
   
 }
-
+.recipe{
+    padding-top: 20px;
+}
 @media only screen and (max-width: 1200px){
 .img-dish{
     display: none;

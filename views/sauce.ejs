@@ -22,12 +22,14 @@
     </div>  
   <div class="wrapper">
     <h3>Ингредиенты: </h3>
+    <ul class="ingredients">
     <% for(let i = 0; i < sauce.length; ++i){ %> <% if(sauce[i].name === name){ %>
     <% for(let k = 0; k < sauce[i].ingredients.name.length; ++k){ %>
-    <p><%= sauce[i].ingredients.name[k] %> <%= sauce[i].ingredients.amount[k] %>г.</p>
+    <li><%= sauce[i].ingredients.name[k] %> <%= sauce[i].ingredients.amount[k] %>г.</li>
   
     <% } %>
-    <h3>Рецепт: </h3>
+  </ul>
+    <h3 class="recipe">Рецепт: </h3>
     <p><%= sauce[i].recipe %></p>
     <% } %> <% } %>
   </div>

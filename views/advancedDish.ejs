@@ -25,10 +25,11 @@
     <ul class="ingredients"></ul>
     <% for(let i = 0; i < advancedDish.length; ++i){ %> <% if(advancedDish[i].name === name){ %>
     <% for(let k = 0; k < advancedDish[i].ingredients.name.length; ++k){ %>
-   <li><%= advancedDish[i].ingredients.name[k] %> <%= advancedDish[i].ingredients.amount[k] %>г.</li></ul>
+   <li><%= advancedDish[i].ingredients.name[k] %> <%= advancedDish[i].ingredients.amount[k] %>г.</li>
   
     <% } %>
-    <h3>Рецепт: </h3>
+  </ul>
+    <h3 class="recipe">Рецепт: </h3>
     <p><%= advancedDish[i].recipe %></p>
     <% } %> <% } %>
   </div>
