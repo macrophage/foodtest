@@ -28,6 +28,8 @@ const bcrypt = require('bcrypt');
 require("./public/config/passport")(passport)
 const session = require('express-session');
 const multer = require('multer');
+aws = require('aws-sdk');
+multerS3 = require('multer-s3');
 const fs = require('fs');
 const advancedDish = require("./models/dish").advancedDish
 const dish = require("./models/dish").dish
@@ -49,13 +51,15 @@ const {
     SSL_OP_SSLEAY_080_CLIENT_DH_BUG
 } = require('constants');
 const { env } = require("process");
-//set storage engine 
-const storage = multer.diskStorage({
-    destination: './public/images/uploads',
-    filename: function(req, file, callback) {
-        callback(null, file.fieldname + ".jpg");
-    }
+//set storage engine , aws config
+aws.config.update({
+    secretAccessKey: process.env.S3_ACCESSKEY,
+    accessKeyId: process.env.S3_KEYID,
+    region: 'eu-central-1'
 });
+s3 = new aws.S3();
+
+
 
 app.set('view engine', 'ejs');
 
@@ -692,13 +696,15 @@ app.post("/tableToUpdate", (req, res) => {
 app.post("/addImage", (req, res) => {
     // init upload 
     const upload = multer({
-        storage: storage
-    }).single("" + key.replace(/\s+/g, ''));
-    upload(req, res, (err) => {
-        if (err) {}
-    });
-    res.redirect("/")
+    storage: multerS3({
+        s3: s3,
+        bucket: 'dish-img',
+        key: function (req, file, cb) {
+            cb(null, key.replace(/\s+/g, '')); 
+        }
+    })
 });
+    upload.array('upl',1)
 app.post("/register", (req, res) => {
 
     const {
