@@ -27,7 +27,7 @@
           <div class="img-wrap">
             <img
               class="img-dish cropped1"
-              src="images/uploads/<%= dish[i].name.replace(/\s+/g, '') %>.jpg"
+              src="https://dish-img.s3.eu-central-1.amazonaws.com/<%= dish[i].name.replace(/\s+/g, '') %>.jpg"
               onerror="if (this.src != 'images/uploads/default.jpg') this.src = 'images/uploads/default.jpg';"
             />
             <div class="img-description_layer">
@@ -64,7 +64,7 @@
           <div class="img-wrap">
             <img
               class="img-dish cropped1"
-              src="images/uploads/<%= advancedDish[i].name.replace(/\s+/g, '') %>.jpg"
+              src="https://dish-img.s3.eu-central-1.amazonaws.com/<%= advancedDish[i].name.replace(/\s+/g, '') %>.jpg"
               onerror="if (this.src != 'images/uploads/default.jpg') this.src = 'images/uploads/default.jpg';"
             />
             <h3 name="<%= advancedDish[i].name %>">
@@ -124,7 +124,7 @@
           <div class="img-wrap">
             <img
               class="img-dish cropped1"
-              src="images/uploads/<%= sauce[i].name.replace(/\s+/g, '') %>.jpg"
+              src="https://dish-img.s3.eu-central-1.amazonaws.com/<%= sauce[i].name.replace(/\s+/g, '') %>.jpg"
               onerror="if (this.src != 'images/uploads/default.jpg') this.src = 'images/uploads/default.jpg';"
             />
             <h3 name="<%= sauce[i].name %>"><strong><%= sauce[i].name %></strong></h3>

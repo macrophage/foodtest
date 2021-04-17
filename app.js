@@ -1,6 +1,7 @@
 if(process.env.NODE_ENV !== "production"){
-    require('dotenv').config()
+    require('dotenv').config({path: './.env'})  
 }
+
 
 const express = require("express");
 const app = express();
@@ -70,7 +71,7 @@ app.use(express.urlencoded({
 //express-session
 
 app.use(session({
-    secret: process.env.SECRET,
+    secret: "process.env.SECRET",
     resave: false,
     saveUninitialized: false
 }));
@@ -596,9 +597,14 @@ app.post("/table", (req, result) => {
                         $pull: {
                             favoriteDish: dishRes
                         },
-                    }, (disherr, dishdoc) => {})
-                    if (fs.existsSync('./public/images/uploads/' + (dishRes.name.replace(/\s+/g, '')) + ".jpg"))
-                        fs.unlinkSync('./public/images/uploads/' + (dishRes.name.replace(/\s+/g, '')) + ".jpg");
+                    }, (disherr, dishdoc) => {})//delete photo if dish got deleted
+                    
+                        s3.deleteObject({ Bucket: 'dish-img', Key: dishRes.name.replace(/\s+/g, '') + ".jpg" }, (err, data) => {
+                            console.error(err);
+                            if(data){
+                                result.redirect("/")
+                            }
+                        });
                     dish.findByIdAndDelete(req.body.remove, err => {
                         if (err) {
                             console.log(err);
@@ -628,8 +634,12 @@ app.post("/table", (req, result) => {
                             favoriteAdvancedDish: advancedDishRes
                         },
                     }, (advdish, advdishdoc) => {})
-                    if (fs.existsSync('./public/images/uploads/' + (advancedDishRes.name.replace(/\s+/g, '')) + ".jpg"))
-                        fs.unlinkSync('./public/images/uploads/' + (advancedDishRes.name.replace(/\s+/g, '')) + ".jpg");
+                    s3.deleteObject({ Bucket: 'dish-img', Key: advancedDishRes.name.replace(/\s+/g, '') + ".jpg" }, (err, data) => {
+                        console.error(err);
+                        if(data){
+                            result.redirect("/")
+                        }
+                    });
                     advancedDish.findByIdAndDelete(req.body.remove, err => {
                         if (err) {
                             console.log(err);
@@ -673,8 +683,12 @@ app.post("/table", (req, result) => {
                                 if (err) {
                                     console.log(err);
                                 }
-                                if (fs.existsSync('./public/images/uploads/' + (sauceRes.name.replace(/\s+/g, '')) + ".jpg"))
-                                    fs.unlinkSync('./public/images/uploads/' + (sauceRes.name.replace(/\s+/g, '')) + ".jpg");
+                                s3.deleteObject({ Bucket: 'dish-img', Key: sauceRes.name.replace(/\s+/g, '') + ".jpg" }, (err, data) => {
+                                    console.error(err);
+                                    if(data){
+                                        result.redirect("/")
+                                    }
+                                });
                             })
                         }
                     })
@@ -693,19 +707,18 @@ app.post("/tableToUpdate", (req, res) => {
         currentUser: req.user
     })
 })
-app.post("/addImage", (req, res) => {
-    // init upload 
-    const upload = multer({
+const upload = multer({
     storage: multerS3({
         s3: s3,
         bucket: 'dish-img',
         key: function (req, file, cb) {
-            cb(null, key.replace(/\s+/g, '')); 
+            cb(null, key.replace(/\s+/g, '')+".jpg"); 
         }
     })
 });
-    upload.array('upl',1)
-})
+app.post('/upload', upload.array('upl',1), function (req, res, next) {
+    res.redirect("/")
+});
    
 app.post("/register", (req, res) => {
 
@@ -773,7 +786,7 @@ app.post("/register", (req, res) => {
                     password
                 });
                 
-                if (req.body.adminCode == process.env.GETADMIN) {
+                if (req.body.adminCode ==  'admin'/*process.env.GETADMIN*/) {
                     newUser.isAdmin = true;
                     newUser.role = "admin";
                 }
@@ -900,6 +913,6 @@ app.post("/main/advanced-dish/favorite", (req, res) => {
     
 })
 
-app.listen(process.env.PORT || 5000), () => {
+app.listen(process.env.PORT || 3000), () => {
     console.log("Live");
 }
